@@ -1,14 +1,29 @@
-import './globals.css';
+import type { Metadata } from 'next'
+import { Inter } from 'next/font/google'
+import './globals.css'
+import ClientOnly from '@/components/ClientOnly'
+import CustomCursor from '@/components/CustomCursor'
 
-export const metadata = {
-  title: 'Compoundly',
-  description: 'Visualize your investment growth',
-};
+const inter = Inter({ subsets: ['latin'] })
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export const metadata: Metadata = {
+  title: 'Compoundly - Compound Interest Calculator',
+  description: 'Visualize your investment growth with precision using our compound interest calculator',
+}
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body className={inter.className}>
+        <ClientOnly>
+          <CustomCursor />
+        </ClientOnly>
+        {children}
+      </body>
     </html>
-  );
+  )
 } 

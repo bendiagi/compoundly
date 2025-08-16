@@ -20,6 +20,22 @@ interface Props {
 
 const formatYear = (month: number) => Math.floor((month - 1) / 12) + 1;
 
+// Currency symbol mapping
+const getCurrencySymbol = (currency: string) => {
+  switch (currency) {
+    case 'USD':
+      return '$';
+    case 'EUR':
+      return '€';
+    case 'GBP':
+      return '£';
+    case 'NGN':
+      return '₦';
+    default:
+      return '$';
+  }
+};
+
 const chartConfig = {
   principal: {
     label: "Principal",
@@ -59,6 +75,7 @@ const InvestmentChart: React.FC<Props> = ({ data, form }) => {
   const totalBalance = lastDataPoint.total;
   const interestEarned = lastDataPoint.interest;
   const totalInvested = lastDataPoint.principal;
+  const currencySymbol = getCurrencySymbol(form?.currency || 'USD');
   
   return (
     <div id="investment-chart" className="w-full h-full bg-[#ECF3E3] border border-[#BDE681] rounded-2xl shadow-lg p-4 flex flex-col">
@@ -66,19 +83,19 @@ const InvestmentChart: React.FC<Props> = ({ data, form }) => {
         <div>
           <div className="text-sm font-medium text-[#33532A] mb-1">Total Balance</div>
           <div className="text-3xl font-light text-[#222821]">
-            {form?.currency === 'NGN' ? '\u20a6' : '$'}{formatCurrency(totalBalance)}
+            {currencySymbol}{formatCurrency(totalBalance)}
           </div>
         </div>
         <div>
           <div className="text-sm font-medium text-[#33532A] mb-1">Interest Earned</div>
           <div className="text-3xl font-light text-[#222821]">
-            {form?.currency === 'NGN' ? '\u20a6' : '$'}{formatCurrency(interestEarned)}
+            {currencySymbol}{formatCurrency(interestEarned)}
           </div>
         </div>
         <div>
           <div className="text-sm font-medium text-[#33532A] mb-1">Total Invested</div>
           <div className="text-3xl font-light text-[#222821]">
-            {form?.currency === 'NGN' ? '\u20a6' : '$'}{formatCurrency(totalInvested)}
+            {currencySymbol}{formatCurrency(totalInvested)}
           </div>
         </div>
       </div>
@@ -117,21 +134,21 @@ const InvestmentChart: React.FC<Props> = ({ data, form }) => {
                       <div className="space-y-1 text-sm">
                         <div className="flex justify-between">
                           <span>Total balance</span>
-                          <span className="font-medium">${totalBalance.toLocaleString()}</span>
+                          <span className="font-medium">{currencySymbol}{totalBalance.toLocaleString()}</span>
                         </div>
                         <div className="flex justify-between">
                           <span className="flex items-center gap-2">
                             <div className="w-3 h-3 rounded-sm bg-[#BDE681] opacity-30"></div>
                             Total principal
                           </span>
-                          <span className="font-medium">${principal.toLocaleString()}</span>
+                          <span className="font-medium">{currencySymbol}{principal.toLocaleString()}</span>
                         </div>
                         <div className="flex justify-between">
                           <span className="flex items-center gap-2">
                             <div className="w-3 h-3 rounded-sm bg-[#222821] opacity-30"></div>
                             Total interest
                           </span>
-                          <span className="font-medium">${interest.toLocaleString()}</span>
+                          <span className="font-medium">{currencySymbol}{interest.toLocaleString()}</span>
                         </div>
                       </div>
                     </div>

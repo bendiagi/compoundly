@@ -21,25 +21,25 @@ const rates = [
   { name: 'Fixed Deposit', rate: 8 },
 ];
 
-const schema = z.object({
-  currency: z.enum(['NGN', 'USD']),
-  initial: z.coerce.number().min(1, 'Required'),
-  recurring: z.coerce.number().min(0).optional(),
+const formSchema = z.object({
+  currency: z.enum(['NGN', 'USD', 'EUR', 'GBP']),
+  initial: z.coerce.number().min(0, 'Initial amount must be positive'),
+  recurring: z.coerce.number().min(0, 'Recurring amount must be positive'),
   recurringFrequency: z.enum(['weekly', 'monthly']),
-  interestRate: z.coerce.number().min(0.01, 'Required'),
+  interestRate: z.coerce.number().min(0, 'Interest rate must be positive').max(100, 'Interest rate cannot exceed 100%'),
   compoundingFrequency: z.enum(['monthly', 'quarterly', 'annually']),
-  age: z.coerce.number().min(1, 'Required').max(100, 'Maximum 100 years'),
+  age: z.coerce.number().min(1, 'Years must be at least 1').max(50, 'Years cannot exceed 50'),
 });
 
-type FormValues = z.infer<typeof schema>;
+type FormValues = z.infer<typeof formSchema>;
 
-const defaultValues: FormValues = {
-  currency: 'USD',
+const defaultValues = {
+  currency: 'USD' as const,
   initial: 5000,
   recurring: 100,
-  recurringFrequency: 'monthly',
+  recurringFrequency: 'monthly' as const,
   interestRate: 12,
-  compoundingFrequency: 'monthly',
+  compoundingFrequency: 'monthly' as const,
   age: 5,
 };
 
@@ -57,7 +57,7 @@ const InvestmentForm: React.FC<Props> = ({ onCalculate }) => {
     watch,
     getValues,
   } = useForm<FormValues>({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(formSchema),
     defaultValues,
   });
 
@@ -313,17 +313,6 @@ const InvestmentForm: React.FC<Props> = ({ onCalculate }) => {
           />
           {errors.age && <span className="text-red-500 text-xs">{errors.age.message}</span>}
         </div>
-        
-        {/* Optional: Add a manual calculate button for debugging */}
-        {process.env.NODE_ENV === 'development' && (
-          <Button 
-            onClick={calculateResults}
-            disabled={isCalculating}
-            className="bg-[#BDE681] text-[#222821] hover:bg-[#A8D670] transition-colors"
-          >
-            {isCalculating ? 'Calculating...' : 'Recalculate'}
-          </Button>
-        )}
       </div>
     </TooltipProvider>
   );

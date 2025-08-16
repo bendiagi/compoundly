@@ -64,32 +64,34 @@ export function calculateCompoundReturns({
   let total = initial;
   let interestAccrued = 0;
 
+  // Calculate effective periodic rates based on compounding frequency
+  let effectiveMonthlyRate: number;
+  let compoundingPeriodsPerYear: number;
+  
+  if (compoundingFrequency === 'monthly') {
+    effectiveMonthlyRate = annualRate / 12;
+    compoundingPeriodsPerYear = 12;
+  } else if (compoundingFrequency === 'quarterly') {
+    effectiveMonthlyRate = Math.pow(1 + annualRate / 4, 1/3) - 1;
+    compoundingPeriodsPerYear = 4;
+  } else { // annually
+    effectiveMonthlyRate = Math.pow(1 + annualRate, 1/12) - 1;
+    compoundingPeriodsPerYear = 1;
+  }
+
   console.log('Starting calculation:', {
     initial,
     monthlyRecurring,
     annualRate,
     compoundingFrequency,
+    effectiveMonthlyRate,
+    compoundingPeriodsPerYear,
     months
   });
 
   for (let m = 1; m <= months; m++) {
-    // Calculate interest for this month
-    let monthlyInterest = 0;
-    
-    if (compoundingFrequency === 'monthly') {
-      // Monthly compounding: simple interest
-      monthlyInterest = total * (annualRate / 12);
-    } else if (compoundingFrequency === 'quarterly') {
-      // Quarterly compounding: only calculate interest every 3rd month
-      if (m % 3 === 0) {
-        monthlyInterest = total * (annualRate / 4);
-      }
-    } else { // annually
-      // Annual compounding: only calculate interest every 12th month
-      if (m % 12 === 0) {
-        monthlyInterest = total * annualRate;
-      }
-    }
+    // Calculate interest for this month using the effective monthly rate
+    const monthlyInterest = total * effectiveMonthlyRate;
 
     // Add interest
     total += monthlyInterest;

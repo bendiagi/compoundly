@@ -4,6 +4,37 @@
 
 body {
   @apply bg-[#DFEAD4] text-foreground font-sans antialiased;
+  /* Custom green circle dot cursor for desktop */
+  cursor: none;
+}
+
+/* Custom cursor styles */
+.custom-cursor {
+  width: 12px;
+  height: 12px;
+  background-color: #BDE681;
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  transition: transform 0.1s ease;
+  mix-blend-mode: difference;
+}
+
+.custom-cursor.hover {
+  transform: scale(1.5);
+  background-color: #8BC34A;
+}
+
+/* Hide custom cursor on mobile/touch devices */
+@media (max-width: 768px) {
+  body {
+    cursor: auto;
+  }
+  
+  .custom-cursor {
+    display: none;
+  }
 }
 
 @layer base {

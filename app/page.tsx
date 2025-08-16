@@ -9,14 +9,25 @@ import { ProjectionPoint } from '@/lib/calculateCompoundReturns';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
 import { calculateCompoundReturns } from '@/lib/calculateCompoundReturns';
 
+// Define the form values type to match InvestmentForm
+type FormValues = {
+  currency: 'USD' | 'NGN' | 'EUR' | 'GBP';
+  initial: number;
+  recurring: number;
+  recurringFrequency: 'weekly' | 'monthly';
+  interestRate: number;
+  compoundingFrequency: 'monthly' | 'quarterly' | 'annually';
+  age: number;
+};
+
 // Import default values to ensure consistency
-const defaultFormValues = {
-  currency: 'USD' as const,
+const defaultFormValues: FormValues = {
+  currency: 'USD',
   initial: 5000,
   recurring: 100,
-  recurringFrequency: 'monthly' as const,
+  recurringFrequency: 'monthly',
   interestRate: 12,
-  compoundingFrequency: 'monthly' as const,
+  compoundingFrequency: 'monthly',
   age: 5
 };
 
@@ -32,11 +43,11 @@ export default function Home() {
   });
 
   const [result, setResult] = useState<ProjectionPoint[] | null>(initialResult);
-  const [form, setForm] = useState<any>(defaultFormValues);
+  const [form, setForm] = useState<FormValues>(defaultFormValues);
   const [isCalculating, setIsCalculating] = useState(false);
 
   // Memoize the onCalculate function to prevent infinite loops
-  const handleCalculate = useCallback((res: ProjectionPoint[], formData: any) => {
+  const handleCalculate = useCallback((res: ProjectionPoint[], formData: FormValues) => {
     console.log('Received new calculation result:', { result: res, form: formData });
     
     // Validate the result before updating state
@@ -75,7 +86,7 @@ export default function Home() {
 
   return (
     <div className="font-sans h-screen flex flex-col items-center justify-center bg-[#DFEAD4] text-foreground p-4 sm:p-8">
-      <Card className="w-full max-w-[1400px] max-h-[90vh] flex flex-col gap-8 bg-[#222821] border-[#33532A] rounded-[3rem] shadow-lg overflow-hidden">
+      <Card className="w-[90vw] max-h-[90vh] flex flex-col gap-8 bg-[#222821] border-[#33532A] rounded-[3rem] shadow-lg overflow-hidden">
         <CardHeader className="text-center mb-2">
           <CardTitle className="text-3xl font-bold mb-1 text-white">See how your money can grow</CardTitle>
           <CardDescription className="text-base text-gray-300">Visualize your investment growth with precision</CardDescription>
