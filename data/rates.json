@@ -1,0 +1,5 @@
+[
+  { "name": "S&P 500", "rate": 10 },
+  { "name": "Crypto Index", "rate": 20 },
+  { "name": "Fixed Deposit", "rate": 8 }
+] 

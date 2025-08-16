@@ -1,0 +1,90 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-[#DFEAD4] text-foreground font-sans antialiased;
+}
+
+@layer base {
+  :root {
+    --background: 120 20% 95%; /* #DFEAD4 - main background */
+    --foreground: 0 0% 100%; /* white text */
+    --card: 220 13% 18%; /* #222821 - background of website card */
+    --card-foreground: 0 0% 100%;
+    --popover: 220 13% 18%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 142 71% 45%; /* #BDE681 - main accent colour */
+    --primary-foreground: 0 0% 100%;
+    --primary-hover: 142 71% 40%;
+    --success: 142 71% 45%; /* #BDE681 - main accent */
+    --info: 220 13% 18%; /* #222821 - dark accent */
+    --secondary: 220 13% 18%; /* #222821 - dark accent */
+    --secondary-foreground: 0 0% 100%;
+    --muted: 220 13% 18%;
+    --muted-foreground: 0 0% 70%; /* light grey */
+    --accent: 220 13% 18%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 220 13% 18%; /* #222821 - dark accent borders */
+    --input: 220 13% 18%; /* #222821 - dark accent inputs */
+    --ring: 142 71% 45%; /* #BDE681 - main accent focus ring */
+    --label: 0 0% 70%; /* light grey labels */
+    --radius: 0.75rem;
+    --chart-principal: 142 71% 45%; /* #BDE681 - main accent for investing */
+    --chart-interest: 0 0% 0%; /* black for saving */ --sidebar-background: 0 0% 98%; --sidebar-foreground: 240 5.3% 26.1%; --sidebar-primary: 240 5.9% 10%; --sidebar-primary-foreground: 0 0% 98%; --sidebar-accent: 240 4.8% 95.9%; --sidebar-accent-foreground: 240 5.9% 10%; --sidebar-border: 220 13% 91%; --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+  .dark {
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@layer components {
+  .card-dark {
+    @apply bg-[#222821] border border-[#33532A] rounded-2xl shadow-lg;
+  }
+  
+  .button-primary {
+    @apply bg-[#BDE681] hover:bg-[#BDE681]/90 text-[#222821] font-medium rounded-lg px-4 py-2 
+           transition-colors duration-200;
+  }
+  
+  .button-secondary {
+    @apply bg-[#222821] text-white font-medium rounded-lg px-4 py-2 
+           transition-colors duration-200 border border-[#33532A];
+  }
+  
+  .input-dark {
+    @apply bg-[#222821] border border-[#33532A] focus:border-[#BDE681] focus:ring-1 focus:ring-[#BDE681] 
+           transition-colors duration-200 rounded-lg px-3 py-2 text-white placeholder:text-gray-400;
+  }
+  
+  .form-dark {
+    @apply bg-[#222821] border border-[#33532A] rounded-2xl shadow-lg p-6;
+  }
+  
+  .chart-dark {
+    @apply bg-[#ECF3E3] border border-[#BDE681] rounded-2xl shadow-lg p-4;
+  }
+  
+  .summary-dark {
+    @apply bg-[#222821] border border-[#33532A] rounded-2xl shadow-lg p-6;
+  }
+} 
