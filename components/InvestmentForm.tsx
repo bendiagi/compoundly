@@ -155,86 +155,92 @@ const InvestmentForm: React.FC<Props> = ({ onCalculate }) => {
 
   return (
     <TooltipProvider>
-      <div className="flex flex-col gap-6">
+      <div className="flex flex-col gap-4">
         <div>
           <Tooltip>
             <TooltipTrigger asChild>
-              <Label className="text-sm font-medium mb-2 text-gray-300">Choose currency</Label>
+              <Label className="text-sm font-medium text-gray-300">Choose currency</Label>
             </TooltipTrigger>
             <TooltipContent className="bg-[#ECF3E3] border-[#33532A] text-[#222821]">
               <p>Choose your preferred currency for calculations</p>
             </TooltipContent>
           </Tooltip>
-          <Controller
-            name="currency"
-            control={control}
-            render={({ field }) => (
-              <CurrencyToggle value={field.value} onChange={field.onChange} />
-            )}
-          />
+          <div className="mt-1">
+            <Controller
+              name="currency"
+              control={control}
+              render={({ field }) => (
+                <CurrencyToggle value={field.value} onChange={field.onChange} />
+              )}
+            />
+          </div>
         </div>
-        <div className="flex gap-4">
+        <div className="flex gap-2 mb-2">
           <div className="flex-1">
             <Tooltip>
               <TooltipTrigger asChild>
-                <Label className="text-sm font-medium mb-2 text-gray-300">Starting amount</Label>
+                <Label className="text-sm font-medium text-gray-300">Starting amount</Label>
               </TooltipTrigger>
               <TooltipContent className="bg-[#ECF3E3] border-[#33532A] text-[#222821]">
                 <p>How much are you starting with?</p>
               </TooltipContent>
             </Tooltip>
-            <Input
-              type="number"
-              step="any"
-              {...register('initial', { 
-                valueAsNumber: true,
-                onChange: (e) => {
-                  const value = parseFloat(e.target.value);
-                  if (!isNaN(value) && value > 0) {
-                    setValue('initial', value);
+            <div className="mt-2">
+              <Input
+                type="number"
+                step="any"
+                {...register('initial', { 
+                  valueAsNumber: true,
+                  onChange: (e) => {
+                    const value = parseFloat(e.target.value);
+                    if (!isNaN(value) && value > 0) {
+                      setValue('initial', value);
+                    }
                   }
-                }
-              })}
-              className="w-full rounded-lg px-3 py-2 bg-[#222821] border border-[#33532A] text-white placeholder:text-gray-400 focus:border-[#BDE681] focus:ring-1 focus:ring-[#BDE681] transition-colors duration-200"
-            />
+                })}
+                className="w-full rounded-lg px-3 py-2 bg-[#222821] border border-[#33532A] text-white placeholder:text-gray-400 focus:border-[#BDE681] focus:ring-1 focus:ring-[#BDE681] transition-colors duration-200"
+              />
+            </div>
             {errors.initial && <span className="text-red-500 text-xs mt-1">{errors.initial.message}</span>}
           </div>
           <div className="flex-1">
             <Tooltip>
               <TooltipTrigger asChild>
-                <Label className="text-sm font-medium mb-2 text-gray-300">Regular deposit</Label>
+                <Label className="text-sm font-medium text-gray-300">Regular deposit</Label>
               </TooltipTrigger>
               <TooltipContent className="bg-[#ECF3E3] border-[#33532A] text-[#222821]">
                 <p>How much will you add regularly?</p>
               </TooltipContent>
             </Tooltip>
-            <Input
-              type="number"
-              step="any"
-              {...register('recurring', { 
-                valueAsNumber: true,
-                onChange: (e) => {
-                  const value = parseFloat(e.target.value);
-                  if (!isNaN(value) && value >= 0) {
-                    setValue('recurring', value);
+            <div className="mt-2">
+              <Input
+                type="number"
+                step="any"
+                {...register('recurring', { 
+                  valueAsNumber: true,
+                  onChange: (e) => {
+                    const value = parseFloat(e.target.value);
+                    if (!isNaN(value) && value >= 0) {
+                      setValue('recurring', value);
+                    }
                   }
-                }
-              })}
-              className="w-full rounded-lg px-3 py-2 bg-[#222821] border border-[#33532A] text-white placeholder:text-gray-400 focus:border-[#BDE681] focus:ring-1 focus:ring-[#BDE681] transition-colors duration-200"
-            />
+                })}
+                className="w-full rounded-lg px-3 py-2 bg-[#222821] border border-[#33532A] text-white placeholder:text-gray-400 focus:border-[#BDE681] focus:ring-1 focus:ring-[#BDE681] transition-colors duration-200"
+              />
+            </div>
             {errors.recurring && <span className="text-red-500 text-xs mt-1">{errors.recurring.message}</span>}
           </div>
         </div>
         <div>
           <Tooltip>
             <TooltipTrigger asChild>
-              <Label className="text-sm font-medium mb-2 text-gray-300">Deposit frequency</Label>
+              <Label className="text-sm font-medium text-gray-300">Deposit frequency</Label>
             </TooltipTrigger>
             <TooltipContent className="bg-[#ECF3E3] border-[#33532A] text-[#222821]">
               <p>How often you add money?</p>
             </TooltipContent>
           </Tooltip>
-          <div className="flex gap-2">
+          <div className="mt-2 flex gap-2">
             <Controller
               name="recurringFrequency"
               control={control}
@@ -258,35 +264,37 @@ const InvestmentForm: React.FC<Props> = ({ onCalculate }) => {
         <div>
           <Tooltip>
             <TooltipTrigger asChild>
-              <Label className="text-sm font-medium mb-2 text-gray-300">Interest rate</Label>
+              <Label className="text-sm font-medium text-gray-300">Interest rate</Label>
             </TooltipTrigger>
             <TooltipContent className="bg-[#ECF3E3] border-[#33532A] text-[#222821]">
               <p>Annual interest rate for your investment</p>
             </TooltipContent>
           </Tooltip>
-          <Controller
-            name="interestRate"
-            control={control}
-            render={({ field }) => (
-              <RateSelector
-                value={field.value}
-                onChange={field.onChange}
-                options={rates}
-              />
-            )}
-          />
+          <div className="mt-2">
+            <Controller
+              name="interestRate"
+              control={control}
+              render={({ field }) => (
+                <RateSelector
+                  value={field.value}
+                  onChange={field.onChange}
+                  options={rates}
+                />
+              )}
+            />
+          </div>
           {errors.interestRate && <span className="text-red-500 text-xs">{errors.interestRate.message}</span>}
         </div>
-        <div>
+        <div className="mb-4">
           <Tooltip>
             <TooltipTrigger asChild>
-              <Label className="text-sm font-medium mb-2 text-gray-300">Compounding</Label>
+              <Label className="text-sm font-medium text-gray-300">Compounding</Label>
             </TooltipTrigger>
             <TooltipContent className="bg-[#ECF3E3] border-[#33532A] text-[#222821]">
               <p>How often interest is calculated and added</p>
             </TooltipContent>
           </Tooltip>
-          <div className="flex gap-2">
+          <div className="mt-2 flex gap-2">
             <Controller
               name="compoundingFrequency"
               control={control}
@@ -310,7 +318,7 @@ const InvestmentForm: React.FC<Props> = ({ onCalculate }) => {
         <div>
           <Tooltip>
             <TooltipTrigger asChild>
-              <Label className="text-sm font-medium mb-2 text-gray-300">Years of growth</Label>
+              <Label className="text-sm font-medium mb-4 text-gray-300">Years of growth</Label>
             </TooltipTrigger>
             <TooltipContent className="bg-[#ECF3E3] border-[#33532A] text-[#222821]">
               <p>How long you plan to invest</p>

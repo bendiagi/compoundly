@@ -6,7 +6,8 @@
 @tailwind utilities;
 
 body {
-  @apply bg-[#DFEAD4] text-foreground font-sans antialiased;
+  @apply text-foreground font-sans antialiased;
+  background-color: #DFEAD4;
   font-family: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   /* Custom green circle dot cursor for desktop */
   cursor: none;
@@ -79,15 +80,42 @@ body {
     --chart-principal: 142 71% 45%; /* #BDE681 - main accent for investing */
     --chart-interest: 0 0% 0%; /* black for saving */ --sidebar-background: 0 0% 98%; --sidebar-foreground: 240 5.3% 26.1%; --sidebar-primary: 240 5.9% 10%; --sidebar-primary-foreground: 0 0% 98%; --sidebar-accent: 240 4.8% 95.9%; --sidebar-accent-foreground: 240 5.9% 10%; --sidebar-border: 220 13% 91%; --sidebar-ring: 217.2 91.2% 59.8%;
   }
+  
   .dark {
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
+    --background: 220 13% 18%; /* #222821 - dark background */
+    --foreground: 0 0% 100%; /* white text */
+    --card: 120 20% 95%; /* #DFEAD4 - light card background */
+    --card-foreground: 220 13% 18%; /* dark text on light card */
+    --popover: 120 20% 95%;
+    --popover-foreground: 220 13% 18%;
+    --primary: 142 71% 45%; /* #BDE681 - main accent colour */
+    --primary-foreground: 0 0% 100%;
+    --primary-hover: 142 71% 40%;
+    --success: 142 71% 45%; /* #BDE681 - main accent */
+    --info: 120 20% 95%; /* #DFEAD4 - light accent */
+    --secondary: 120 20% 95%; /* #DFEAD4 - light accent */
+    --secondary-foreground: 220 13% 18%;
+    --muted: 120 20% 95%;
+    --muted-foreground: 220 13% 18%; /* dark text on light background */
+    --accent: 120 20% 95%;
+    --accent-foreground: 220 13% 18%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 120 20% 95%; /* #DFEAD4 - light borders */
+    --input: 120 20% 95%; /* #DFEAD4 - light inputs */
+    --ring: 142 71% 45%; /* #BDE681 - main accent focus ring */
+    --label: 220 13% 18%; /* dark labels on light background */
+    --radius: 0.75rem;
+    --chart-principal: 142 71% 45%; /* #BDE681 - main accent for investing */
+    --chart-interest: 0 0% 0%; /* black for saving */
+    --sidebar-background: 120 20% 95%;
+    --sidebar-foreground: 220 13% 18%;
+    --sidebar-primary: 142 71% 45%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-accent: 120 20% 95%;
+    --sidebar-accent-foreground: 220 13% 18%;
+    --sidebar-border: 120 20% 95%;
+    --sidebar-ring: 142 71% 45%;
   }
 }
 
@@ -103,6 +131,14 @@ body {
 @layer components {
   .card-dark {
     @apply bg-[#222821] border border-[#33532A] rounded-2xl shadow-lg;
+  }
+  
+  .form-label-spacing {
+    margin-bottom: 1.5rem !important;
+  }
+  
+  .form-field-spacing {
+    margin-top: 1rem !important;
   }
   
   .button-primary {

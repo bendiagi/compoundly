@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import './globals.css'
 import ClientOnly from '@/components/ClientOnly'
 import CustomCursor from '@/components/CustomCursor'
+import DesktopNav from '@/components/DesktopNav'
+import { ThemeProvider } from '@/components/ThemeProvider'
 
 export const metadata: Metadata = {
   title: 'Compoundly - Compound Interest Calculator',
@@ -16,10 +18,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="font-sans">
-        <ClientOnly>
-          <CustomCursor />
-        </ClientOnly>
-        {children}
+        <ThemeProvider>
+          <ClientOnly>
+            <CustomCursor />
+          </ClientOnly>
+          <DesktopNav />
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   )

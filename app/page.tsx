@@ -85,12 +85,12 @@ export default function Home() {
   }, [result, form]);
 
   return (
-    <div className="font-sans min-h-screen flex flex-col items-center justify-center bg-[#DFEAD4] text-foreground p-0 lg:p-4 sm:lg:p-8">
+    <div className="font-sans flex flex-col items-center text-foreground p-0 lg:px-4 sm:lg:px-8 mt-0">
       {/* Mobile: Full screen content */}
-      <div className="w-full lg:hidden bg-[#222821] flex flex-col gap-8 min-h-screen">
+      <div className="w-full lg:hidden bg-[#222821] flex flex-col gap-8">
         <div className="text-center mb-1 p-4">
           <h1 className="text-3xl font-bold mb-1 text-white font-geist-mono">Compoundly</h1>
-          <p className="text-base text-gray-300 font-geist">Watch your savings and investments grow with the power of compound interest.</p>
+          <p className="text-base text-gray-300 font-geist">Watch your investments grow with the power of compound interest.</p>
         </div>
         <div className="flex flex-col gap-8 flex-1 px-4 pb-4">
           <div className="flex flex-col gap-8">
@@ -103,14 +103,15 @@ export default function Home() {
       </div>
 
       {/* Desktop: Card design */}
-      <Card className="hidden lg:flex w-[95vw] h-[90vh] rounded-[3rem] shadow-lg bg-[#222821] border-[#33532A] flex-col gap-8">
+      <Card className="hidden lg:flex w-[95vw] rounded-[3rem] shadow-lg bg-[#222821] border-[#33532A] flex-col gap-8 mt-6 mb-6">
         <CardContent className="flex flex-row gap-8 flex-1 p-6">
-          <div className="flex flex-col gap-8 w-[35%]">
-            {/* Title and subtitle moved to left section */}
-            <div className="text-left mb-2">
-              <h1 className="text-3xl font-bold mb-1 text-white font-geist-mono">Compoundly</h1>
-              <p className="text-base text-gray-300 font-geist">Watch your savings and investments grow with the power of compound interest.</p>
-            </div>
+          <div className="flex flex-col gap-4 w-[35%] pb-6">
+            {/* Form section with subtitle */}
+            <Card className="bg-[#2A3E24] border-[#1a2d15] rounded-2xl">
+              <CardContent className="p-4">
+                <p className="text-base font-thin text-[#BDE681] font-geist-mono">Watch your savings and investments grow with the power of compound interest.</p>
+              </CardContent>
+            </Card>
             <InvestmentForm onCalculate={handleCalculate} />
           </div>
           <div className="w-[65%]">
