@@ -85,17 +85,35 @@ export default function Home() {
   }, [result, form]);
 
   return (
-    <div className="font-sans h-screen flex flex-col items-center justify-center bg-[#DFEAD4] text-foreground p-4 sm:p-8">
-      <Card className="w-[90vw] max-h-[90vh] flex flex-col gap-8 bg-[#222821] border-[#33532A] rounded-[3rem] shadow-lg overflow-hidden">
-        <CardHeader className="text-center mb-2">
-          <CardTitle className="text-3xl font-bold mb-1 text-white">See how your money can grow</CardTitle>
-          <CardDescription className="text-base text-gray-300">Visualize your investment growth with precision</CardDescription>
-        </CardHeader>
-        <CardContent className="flex flex-col lg:flex-row gap-8 flex-1 overflow-hidden">
-          <div className="flex flex-col gap-8 lg:w-[35%]">
+    <div className="font-sans min-h-screen flex flex-col items-center justify-center bg-[#DFEAD4] text-foreground p-0 lg:p-4 sm:lg:p-8">
+      {/* Mobile: Full screen content */}
+      <div className="w-full lg:hidden bg-[#222821] flex flex-col gap-8 min-h-screen">
+        <div className="text-center mb-1 p-4">
+          <h1 className="text-3xl font-bold mb-1 text-white font-geist-mono">Compoundly</h1>
+          <p className="text-base text-gray-300 font-geist">Watch your savings and investments grow with the power of compound interest.</p>
+        </div>
+        <div className="flex flex-col gap-8 flex-1 px-4 pb-4">
+          <div className="flex flex-col gap-8">
             <InvestmentForm onCalculate={handleCalculate} />
           </div>
-          <div className="lg:w-[65%] h-full">
+          <div className="mt-8">
+            <InvestmentChart data={result} form={form} />
+          </div>
+        </div>
+      </div>
+
+      {/* Desktop: Card design */}
+      <Card className="hidden lg:flex w-[95vw] h-[90vh] rounded-[3rem] shadow-lg bg-[#222821] border-[#33532A] flex-col gap-8">
+        <CardContent className="flex flex-row gap-8 flex-1 p-6">
+          <div className="flex flex-col gap-8 w-[35%]">
+            {/* Title and subtitle moved to left section */}
+            <div className="text-left mb-2">
+              <h1 className="text-3xl font-bold mb-1 text-white font-geist-mono">Compoundly</h1>
+              <p className="text-base text-gray-300 font-geist">Watch your savings and investments grow with the power of compound interest.</p>
+            </div>
+            <InvestmentForm onCalculate={handleCalculate} />
+          </div>
+          <div className="w-[65%]">
             <InvestmentChart data={result} form={form} />
           </div>
         </CardContent>

@@ -15,6 +15,7 @@ import { useEffect, useCallback, useRef, useState } from 'react';
 import { Toggle } from '@/components/ui/toggle';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
+// Import rates data
 const rates = [
   { name: 'S&P 500', rate: 10 },
   { name: 'Crypto Index', rate: 20 },
@@ -133,6 +134,24 @@ const InvestmentForm: React.FC<Props> = ({ onCalculate }) => {
   }, [watchedValues, calculateResults]);
 
   const currency = watch('currency');
+
+  // Handle mobile calculate button click
+  const handleMobileCalculate = () => {
+    calculateResults();
+    
+    // Auto-scroll to chart on mobile only
+    if (typeof window !== 'undefined' && window.innerWidth <= 768) {
+      setTimeout(() => {
+        const chartElement = document.getElementById('investment-chart');
+        if (chartElement) {
+          chartElement.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      }, 100); // Small delay to ensure calculation completes
+    }
+  };
 
   return (
     <TooltipProvider>
@@ -313,6 +332,14 @@ const InvestmentForm: React.FC<Props> = ({ onCalculate }) => {
           />
           {errors.age && <span className="text-red-500 text-xs">{errors.age.message}</span>}
         </div>
+
+        {/* Mobile-only Calculate Button */}
+        <Button
+          onClick={handleMobileCalculate}
+          className="lg:hidden w-full bg-[#BDE681] hover:bg-[#BDE681]/90 text-[#222821] font-medium rounded-lg px-4 py-3 transition-colors duration-200"
+        >
+          Calculate
+        </Button>
       </div>
     </TooltipProvider>
   );

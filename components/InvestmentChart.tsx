@@ -78,29 +78,35 @@ const InvestmentChart: React.FC<Props> = ({ data, form }) => {
   const currencySymbol = getCurrencySymbol(form?.currency || 'USD');
   
   return (
-    <div id="investment-chart" className="w-full h-full bg-[#ECF3E3] border border-[#BDE681] rounded-2xl shadow-lg p-4 flex flex-col">
-      <div className="mb-4 flex gap-8 items-end justify-end pr-2">
-        <div>
-          <div className="text-sm font-medium text-[#33532A] mb-1">Total Balance</div>
+    <div id="investment-chart" className="w-full h-screen lg:h-full bg-[#ECF3E3] border border-[#BDE681] rounded-2xl shadow-lg p-4 flex flex-col mt-8 lg:mt-0">
+      {/* Summary Values - Mobile: left-aligned & stacked, Desktop: right-aligned & horizontal */}
+      <div className="mb-4 flex gap-8 items-end lg:justify-end lg:flex-row flex-col lg:pr-2">
+        {/* Total Balance - Mobile: full width first line, Desktop: normal */}
+        <div className="lg:w-auto w-full">
+          <div className="text-sm font-medium text-[#33532A] mb-1 font-geist-mono">Total Balance</div>
           <div className="text-3xl font-light text-[#222821]">
             {currencySymbol}{formatCurrency(totalBalance)}
           </div>
         </div>
-        <div>
-          <div className="text-sm font-medium text-[#33532A] mb-1">Interest Earned</div>
-          <div className="text-3xl font-light text-[#222821]">
-            {currencySymbol}{formatCurrency(interestEarned)}
+        
+        {/* Interest Earned & Total Invested - Mobile: side by side on second line, Desktop: normal */}
+        <div className="lg:w-auto w-full flex gap-8">
+          <div>
+            <div className="text-sm font-medium text-[#33532A] mb-1 font-geist-mono">Interest Earned</div>
+            <div className="text-3xl font-light text-[#222821]">
+              {currencySymbol}{formatCurrency(interestEarned)}
+            </div>
           </div>
-        </div>
-        <div>
-          <div className="text-sm font-medium text-[#33532A] mb-1">Total Invested</div>
-          <div className="text-3xl font-light text-[#222821]">
-            {currencySymbol}{formatCurrency(totalInvested)}
+          <div>
+            <div className="text-sm font-medium text-[#33532A] mb-1 font-geist-mono">Total Invested</div>
+            <div className="text-3xl font-light text-[#222821]">
+              {currencySymbol}{formatCurrency(totalInvested)}
+            </div>
           </div>
         </div>
       </div>
       
-      <div className="flex-1 min-h-0 px-2">
+      <div className="flex-1 min-h-0 px-0 lg:px-2 h-full">
         <ChartContainer 
           config={chartConfig} 
           className="h-full w-full flex-col [&]:!aspect-none [&]:!justify-start"
@@ -117,6 +123,8 @@ const InvestmentChart: React.FC<Props> = ({ data, form }) => {
               tickFormatter={v => v >= 1000 ? (v / 1000) + 'k' : v}
               stroke="#6B7280"
               fontSize={12}
+              width={40}
+              className="lg:w-auto"
             />
             <ChartTooltip
               content={({ active, payload, label }) => {

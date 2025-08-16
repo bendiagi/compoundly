@@ -68,12 +68,14 @@ module.exports = {
   			}
   		},
   		fontFamily: {
-  			sans: [
-  				'Inter',
-  				'ui-sans-serif',
-  				'system-ui'
-  			]
-  		},
+			sans: [
+				'Geist',
+				'ui-sans-serif',
+				'system-ui'
+			],
+			'geist': ['Geist', 'ui-sans-serif', 'system-ui'],
+			'geist-mono': ['Geist Mono', 'ui-mono', 'monospace']
+		},
   		borderRadius: {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
