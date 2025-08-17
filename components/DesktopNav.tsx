@@ -12,7 +12,7 @@ const DesktopNav: React.FC = () => {
       <div className="flex items-center justify-between w-full">
         {/* Left side - Title */}
         <div className="flex items-center pl-4">
-          <h1 className="text-2xl font-bold text-white font-geist-mono">Compoundly</h1>
+          <h1 className="text-2xl font-bold text-[#DFEAD4] font-geist-mono">Compoundly</h1>
         </div>
         
         {/* Right side - Theme toggle */}
