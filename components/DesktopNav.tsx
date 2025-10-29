@@ -10,12 +10,18 @@ const DesktopNav: React.FC = () => {
         {/* Left side - Title + Subtitle */}
         <div className="flex flex-col pl-2 lg:pl-4">
           <h1 className="text-2xl font-bold text-[#DFEAD4] font-geist-mono">Compoundly</h1>
-          <p className="lg:hidden text-base text-[#DAE5D0] font-geist-mono mt-0.5">
+          <p className="lg:hidden text-base text-[#DAE5D0] font-geist-mono mt-2">
             See how your savings and investments can grow with the power of compound interest.
           </p>
+          {/* Mobile-only: show counter under subtitle */}
+          <div className="lg:hidden mt-3">
+            <CalcCounter />
+          </div>
         </div>
-        {/* Right side - Global calculation counter */}
-        <CalcCounter />
+        {/* Right side - Global calculation counter (desktop only) */}
+        <div className="hidden lg:flex items-center">
+          <CalcCounter />
+        </div>
       </div>
     </nav>
   );
@@ -45,7 +51,7 @@ const CalcCounter: React.FC = () => {
 
   return (
     <div className="flex items-center">
-      <div className="px-3 py-1 rounded-full border border-[#33532A] text-[#DAE5D0] bg-[#222821] font-geist-mono text-sm">
+      <div className="px-2 py-0.5 lg:px-3 lg:py-1 rounded-full border border-[#33532A] text-[#DAE5D0] bg-[#243721] lg:bg-[#222821] font-geist-mono text-xs lg:text-sm">
         <span className="font-bold">{count ?? '…'}</span> investment journeys visualized
       </div>
     </div>
