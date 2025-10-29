@@ -57,9 +57,6 @@ export function getInvestmentOptions(params: {
 }): InvestmentOption[] {
   const { countryCode, currencyCode } = params;
   const json = data as unknown as InvestmentsByCountry;
-  if (process.env.NODE_ENV !== 'production') {
-    console.log('[investments] request', { countryCode, currencyCode });
-  }
 
   const buildForCountry = (countryName: string): InvestmentOption[] => {
     const list = getCountryRecords(json, countryName);
@@ -67,15 +64,6 @@ export function getInvestmentOptions(params: {
     const flag = getCountryByCode(code ?? undefined)?.flag;
     const filtered = list
       .filter((rec) => (rec.currency || '').toString().trim().toUpperCase() === currencyCode.toUpperCase())
-    if (process.env.NODE_ENV !== 'production') {
-      console.log('[investments] country filter', {
-        countryName,
-        total: list.length,
-        matched: filtered.length,
-        sample: filtered.slice(0, 3),
-        sampleCurrencies: list.slice(0, 5).map((r) => (r.currency || '').toString().trim().toUpperCase()),
-      });
-    }
     return filtered.map((rec) => ({
         name: rec.fund,
         rate: parseRateToNumber(rec.rate) ?? 0,
@@ -87,9 +75,6 @@ export function getInvestmentOptions(params: {
     // Flatten across supported countries, grouped earlier order
     const ordered = ['Nigeria', 'Kenya', 'South Africa', 'Ghana', 'Egypt'];
     const result = ordered.flatMap((name) => buildForCountry(name));
-    if (process.env.NODE_ENV !== 'production') {
-      console.log('[investments] ALL result count', result.length);
-    }
     return result;
   }
 
@@ -99,9 +84,6 @@ export function getInvestmentOptions(params: {
     null;
   if (!name) return [];
   const result = buildForCountry(name);
-  if (process.env.NODE_ENV !== 'production') {
-    console.log('[investments] single result count', { name, count: result.length });
-  }
   return result;
 }
 

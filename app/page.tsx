@@ -48,8 +48,6 @@ export default function Home() {
 
   // Memoize the onCalculate function to prevent infinite loops
   const handleCalculate = useCallback((res: ProjectionPoint[], formData: FormValues) => {
-    console.log('Received new calculation result:', { result: res, form: formData });
-    
     // Validate the result before updating state
     if (res && Array.isArray(res) && res.length > 0) {
       const lastResult = res[res.length - 1];
@@ -66,7 +64,6 @@ export default function Home() {
         
         setResult(res);
         setForm(formData);
-        console.log('State updated successfully with new calculation');
       } else {
         console.warn('Invalid calculation result received:', lastResult);
       }
@@ -75,46 +72,19 @@ export default function Home() {
     }
   }, []);
 
-  // Debug effect to log state changes
-  useEffect(() => {
-    console.log('Calculator state updated:', { 
-      resultLength: result?.length, 
-      formValues: form,
-      lastResult: result?.[result?.length - 1]
-    });
-  }, [result, form]);
-
   return (
     <div className="font-sans flex flex-col items-center text-foreground p-0 lg:px-4 sm:lg:px-8 mt-0">
-      {/* Mobile: Full screen content */}
-      <div className="w-full lg:hidden bg-[#222821] flex flex-col gap-8">
-        <div className="text-center mb-1 p-4">
-          <h1 className="text-3xl font-bold mb-1 text-white font-geist-mono">Compoundly</h1>
-          <p className="text-base text-gray-300 font-geist">Watch your investments grow with the power of compound interest.</p>
-        </div>
-        <div className="flex flex-col gap-8 flex-1 px-4 pb-4">
-          <div className="flex flex-col gap-8">
-            <InvestmentForm onCalculate={handleCalculate} />
-          </div>
-          <div className="mt-8">
-            <InvestmentChart data={result} form={form} />
-          </div>
-        </div>
-      </div>
-
-      {/* Desktop: Card design */}
-      <Card className="hidden lg:flex w-[95vw] rounded-[3rem] shadow-lg bg-[#222821] border-[#33532A] flex-col gap-8 mt-6 mb-6">
-        <CardContent className="flex flex-row gap-8 flex-1 p-6">
-          <div className="flex flex-col gap-4 w-[35%] pb-6">
-            {/* Form section with subtitle */}
-            <Card className="bg-[#2A3E24] border-[#1a2d15] rounded-2xl">
+      <Card className="w-full lg:w-[95vw] rounded-none lg:rounded-[3rem] shadow-lg bg-[#222821] border-[#33532A] flex flex-col gap-4 lg:gap-8 mt-0 lg:mt-6 mb-6">
+        <CardContent className="flex flex-col lg:flex-row gap-0 lg:gap-8 flex-1 p-4 lg:p-6">
+          <div className="flex flex-col gap-4 w-full lg:w-[35%] pb-0 lg:pb-6 min-h-[100svh] lg:min-h-0">
+            <Card className="hidden lg:block bg-[#2A3E24] border-[#1a2d15] rounded-2xl">
               <CardContent className="p-4">
-                <p className="text-base font-thin text-[#BDE681] font-geist-mono">Watch your savings and investments grow with the power of compound interest.</p>
+                <p className="text-base font-thin text-[#BDE681] font-geist-mono">See how your savings and investments can grow with the power of compound interest.</p>
               </CardContent>
             </Card>
             <InvestmentForm onCalculate={handleCalculate} />
           </div>
-          <div className="w-[65%]">
+          <div className="w-full lg:w-[65%] mt-0 lg:mt-0">
             <InvestmentChart data={result} form={form} />
           </div>
         </CardContent>

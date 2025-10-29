@@ -79,15 +79,6 @@ export function calculateCompoundReturns({
     compoundingPeriodsPerYear = 1;
   }
 
-  console.log('Starting calculation:', {
-    initial,
-    monthlyRecurring,
-    annualRate,
-    compoundingFrequency,
-    effectiveMonthlyRate,
-    compoundingPeriodsPerYear,
-    months
-  });
 
   for (let m = 1; m <= months; m++) {
     // Calculate interest for this month using the effective monthly rate
@@ -123,15 +114,6 @@ export function calculateCompoundReturns({
       return [];
     }
 
-    // Debug first few months and last month
-    if (m <= 3 || m === months) {
-      console.log(`Month ${m}:`, {
-        principal: Math.round(principal * 100) / 100,
-        total: Math.round(total * 100) / 100,
-        monthlyInterest: Math.round(monthlyInterest * 100) / 100,
-        interestAccrued: Math.round(interestAccrued * 100) / 100
-      });
-    }
 
     data.push({
       month: m,
@@ -149,7 +131,6 @@ export function calculateCompoundReturns({
   }
   
   const finalResult = data[data.length - 1];
-  console.log('Final result:', finalResult);
   
   // Additional validation of final result
   if (!isFinite(finalResult.total) || !isFinite(finalResult.principal) || !isFinite(finalResult.interest)) {

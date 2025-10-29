@@ -38,7 +38,6 @@ const SummaryStats: React.FC<Props> = ({ data, form }) => {
       typeof last.principal !== 'number' ||
       !isFinite(last.interest) || 
       !isFinite(last.principal)) {
-    console.warn('Invalid summary data detected:', last);
     return <div className="text-gray-400">Invalid calculation data. Please check your inputs.</div>;
   }
   

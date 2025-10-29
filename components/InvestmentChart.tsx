@@ -62,7 +62,6 @@ const InvestmentChart: React.FC<Props> = ({ data, form }) => {
       !isFinite(lastDataPoint.total) || 
       !isFinite(lastDataPoint.interest) || 
       !isFinite(lastDataPoint.principal)) {
-    console.warn('Invalid data point detected:', lastDataPoint);
     return <div className="text-gray-400">Invalid calculation data. Please check your inputs.</div>;
   }
   
@@ -78,7 +77,7 @@ const InvestmentChart: React.FC<Props> = ({ data, form }) => {
   const currencySymbol = getCurrencySymbol(form?.currency || 'USD');
   
   return (
-    <div id="investment-chart" className="w-full h-screen lg:h-full bg-[#ECF3E3] border border-[#BDE681] rounded-2xl shadow-lg p-4 flex flex-col mt-8 lg:mt-0">
+    <div id="investment-chart" className="w-full h-[calc(100svh-2rem)] lg:h-full bg-[#ECF3E3] border border-[#BDE681] rounded-2xl shadow-lg p-4 flex flex-col my-0 lg:my-0 scroll-mt-4 lg:scroll-mt-0">
       {/* Summary Values - Mobile: left-aligned & stacked, Desktop: right-aligned & horizontal */}
       <div className="mb-4 flex gap-8 items-end lg:justify-end lg:flex-row flex-col lg:pr-2">
         {/* Total Balance - Mobile: full width first line, Desktop: normal */}
@@ -106,12 +105,16 @@ const InvestmentChart: React.FC<Props> = ({ data, form }) => {
         </div>
       </div>
       
-      <div className="flex-1 min-h-0 px-0 lg:px-2 h-full">
+      <div className="flex-1 h-full px-0 lg:px-2">
         <ChartContainer 
           config={chartConfig} 
           className="h-full w-full flex-col [&]:!aspect-none [&]:!justify-start"
         >
-          <AreaChart data={data} margin={{ top: 8, right: 8, left: 0, bottom: 8 }}>
+          <AreaChart
+            key={`${data.length}-${lastDataPoint.total}-${form?.currency}-${form?.interestRate}-${form?.recurring}-${form?.initial}`}
+            data={data}
+            margin={{ top: 8, right: 8, left: 0, bottom: 8 }}
+          >
             <XAxis
               dataKey="month"
               tickFormatter={month => `Yr ${formatYear(month)}`}

@@ -63,7 +63,6 @@ const InvestmentForm: React.FC<Props> = ({ onCalculate }) => {
 
   const isInitialMount = useRef(true);
   const [isCalculating, setIsCalculating] = useState(false);
-
   // Watch individual form fields for automatic calculation
   const watchedValues = watch();
 
@@ -80,11 +79,6 @@ const InvestmentForm: React.FC<Props> = ({ onCalculate }) => {
     
     // Skip calculation if inputs are invalid or missing
     if (!validInitial || validInitial <= 0 || !validInterestRate || validInterestRate <= 0 || !validAge || validAge <= 0) {
-      console.warn('Skipping calculation due to invalid inputs:', {
-        initial: validInitial,
-        interestRate: validInterestRate,
-        age: validAge
-      });
       return;
     }
     
@@ -106,7 +100,6 @@ const InvestmentForm: React.FC<Props> = ({ onCalculate }) => {
           ...currentValues,
           recurring: validRecurring,
         };
-        
         onCalculate(result, formData);
       }
     } catch (error) {
@@ -130,14 +123,11 @@ const InvestmentForm: React.FC<Props> = ({ onCalculate }) => {
     }, 100);
     
     return () => clearTimeout(timeoutId);
-  }, [watchedValues, calculateResults]);
+  }, [watchedValues, calculateResults, getValues]);
 
   const currency = watch('currency');
   const countryCode = useEffectiveCountryCode();
   const rateOptions = getInvestmentOptions({ countryCode, currencyCode: currency });
-  if (process.env.NODE_ENV !== 'production') {
-    console.log('[form] country/currency/options', { countryCode, currency, options: rateOptions.length });
-  }
 
   // Determine currency options for selected country: USD + local
   const localCurrencyMap: Record<string, 'NGN' | 'KES' | 'ZAR' | 'GHS' | 'EGP' | undefined> = {
@@ -189,7 +179,7 @@ const InvestmentForm: React.FC<Props> = ({ onCalculate }) => {
 
   return (
     <TooltipProvider>
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4 h-full">
         {/* Header row: Country then Currency inline on the left */}
         <div className="flex items-end gap-3">
           <div className="flex-1">
@@ -384,7 +374,7 @@ const InvestmentForm: React.FC<Props> = ({ onCalculate }) => {
         {/* Mobile-only Calculate Button */}
         <Button
           onClick={handleMobileCalculate}
-          className="lg:hidden w-full bg-[#BDE681] hover:bg-[#BDE681]/90 text-[#222821] font-medium rounded-lg px-4 py-3 transition-colors duration-200"
+          className="lg:hidden sticky bottom-2 w-full bg-[#BDE681] hover:bg-[#BDE681]/90 text-[#222821] font-medium rounded-lg px-4 py-3 transition-colors duration-200"
         >
           Calculate
         </Button>
