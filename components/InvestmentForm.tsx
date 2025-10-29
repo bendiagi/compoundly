@@ -116,6 +116,15 @@ const InvestmentForm: React.FC<Props> = ({ onCalculate }) => {
           recurring: validRecurring,
         };
         onCalculate(result, formData);
+
+        // Desktop: increment metrics on successful calculation (deduped by input hash)
+        if (typeof window !== 'undefined' && window.innerWidth > 768) {
+          const h = hashInputs(formData as any);
+          if (lastCountedHashRef.current !== h) {
+            lastCountedHashRef.current = h;
+            postMetricsIncrement();
+          }
+        }
       }
     } catch (error) {
       console.error('Calculation error:', error);
@@ -161,25 +170,7 @@ const InvestmentForm: React.FC<Props> = ({ onCalculate }) => {
     return () => clearTimeout(timeoutId);
   }, [watchedValues, calculateResults, getValues]);
 
-  // Desktop auto-calc: debounce + dedupe metric increments
-  useEffect(() => {
-    // mobile uses explicit button; this handles desktop where auto calc happens
-    if (typeof window !== 'undefined' && window.innerWidth <= 768) return;
-    const v = getValues();
-    const valid = v.initial > 0 && v.interestRate > 0 && v.age > 0;
-    if (!valid) return;
-    const h = hashInputs(v);
-    if (desktopDebounceIdRef.current) clearTimeout(desktopDebounceIdRef.current);
-    desktopDebounceIdRef.current = setTimeout(() => {
-      if (lastCountedHashRef.current !== h) {
-        lastCountedHashRef.current = h;
-        postMetricsIncrement();
-      }
-    }, 1200);
-    return () => {
-      if (desktopDebounceIdRef.current) clearTimeout(desktopDebounceIdRef.current);
-    };
-  }, [watchedValues, getValues]);
+  // Removed separate desktop debounced watcher; we increment on successful calculation instead
 
   const currency = watch('currency');
   const countryCode = useEffectiveCountryCode();

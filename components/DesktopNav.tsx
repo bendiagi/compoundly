@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 const DesktopNav: React.FC = () => {
 
   return (
-    <nav className="flex w-full lg:w-[95vw] mx-auto bg-[#222821] border-b-2 lg:border-b-2 border-[#DAE5D0] rounded-none lg:rounded-b-[3rem] pl-4 pr-6 py-4 shadow-lg mb-0">
+    <nav className="flex w-full lg:w-[95vw] mx-auto bg-[#222821] border-b-2 lg:border-b-2 border-[#DAE5D0] rounded-none lg:rounded-b-[3rem] pl-4 pr-8 py-4 shadow-lg mb-0">
       <div className="flex items-center justify-between w-full">
         {/* Left side - Title + Subtitle */}
         <div className="flex flex-col pl-2 lg:pl-4">
@@ -46,7 +46,7 @@ const CalcCounter: React.FC = () => {
   return (
     <div className="flex items-center">
       <div className="px-3 py-1 rounded-full border border-[#33532A] text-[#DAE5D0] bg-[#222821] font-geist-mono text-sm">
-        Calculations {count ?? '…'}
+        {(count ?? '…')} investment journeys visualized.
       </div>
     </div>
   );
