@@ -7,7 +7,21 @@ import { ThemeProvider } from '@/components/ThemeProvider'
 
 export const metadata: Metadata = {
   title: 'Compoundly - Compound Interest Calculator',
-  description: 'Visualize your investment growth with precision using our compound interest calculator',
+  description: 'See how your savings and investments can grow with the power of compound interest.',
+  icons: {
+    icon: '/favicon.ico',
+  },
+  openGraph: {
+    title: 'Compoundly - Compound Interest Calculator',
+    description: 'See how your savings and investments can grow with the power of compound interest.',
+    images: ['/compoundly-meta-image.png'],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Compoundly - Compound Interest Calculator',
+    description: 'See how your savings and investments can grow with the power of compound interest.',
+    images: ['/compoundly-meta-image.png'],
+  },
 }
 
 export default function RootLayout({
