@@ -33,6 +33,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="font-sans">
+        {/* Google Analytics */}
+        <Script src="https://www.googletagmanager.com/gtag/js?id=G-ZE8CKLH09M" strategy="afterInteractive" />
+        <Script id="ga-gtag" strategy="afterInteractive">
+          {`window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);} 
+gtag('js', new Date());
+gtag('config', 'G-ZE8CKLH09M');`}
+        </Script>
         {/* Microsoft Clarity */}
         <Script id="ms-clarity" strategy="afterInteractive">
           {`(function(c,l,a,r,i,t,y){
