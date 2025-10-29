@@ -1,0 +1,367 @@
+{
+    "Nigeria": [
+    {
+    "fund": "Chapel Hill Denham Money Market Fund",
+    "rate": "24%",
+    "currency": "NGN"
+    },
+    {
+    "fund": "CardinalStone Money Market Fund",
+    "rate": "25%",
+    "currency": "NGN"
+    },
+    {
+    "fund": "Anchoria Money Market Fund",
+    "rate": "24%",
+    "currency": "NGN"
+    },
+    {
+    "fund": "ARM Money Market Fund",
+    "rate": "23%",
+    "currency": "NGN"
+    },
+    {
+    "fund": "Meristem Money Market Fund",
+    "rate": "22%",
+    "currency": "NGN"
+    },
+    {
+    "fund": "DLM Money Market Fund",
+    "rate": "22%",
+    "currency": "NGN"
+    },
+    {
+    "fund": "Page Money Market Fund",
+    "rate": "22%",
+    "currency": "NGN"
+    },
+    {
+    "fund": "Stanbic IBTC Money Market Fund",
+    "rate": "20%",
+    "currency": "NGN"
+    },
+    {
+    "fund": "Guaranty Trust Money Market Fund",
+    "rate": "21%",
+    "currency": "NGN"
+    },
+    {
+    "fund": "PiggyVest Fixed Savings/Flex Naira",
+    "rate": "19%",
+    "currency": "NGN"
+    },
+    {
+    "fund": "Cowrywise Investment Portfolio (Mutual Fund)",
+    "rate": "18%",
+    "currency": "NGN"
+    },
+    {
+    "fund": "FBN Money Market Fund",
+    "rate": "18%",
+    "currency": "NGN"
+    },
+    {
+    "fund": "Afrinvest Plutus Fund",
+    "rate": "13%",
+    "currency": "NGN"
+    },
+    {
+    "fund": "United Capital Money Market Fund",
+    "rate": "22%",
+    "currency": "NGN"
+    },
+    {
+    "fund": "Risevest Fixed Income",
+    "rate": "13%",
+    "currency": "NGN"
+    },
+    {
+    "fund": "Risevest Fixed Income",
+    "rate": "10%",
+    "currency": "USD"
+    }
+    ],
+    "Kenya": [
+    {
+    "fund": "Ndovu Money Market Fund",
+    "rate": "14%",
+    "currency": "KES"
+    },
+    {
+    "fund": "Cytonn Money Market Fund",
+    "rate": "13%",
+    "currency": "KES"
+    },
+    {
+    "fund": "Madison Money Market Fund",
+    "rate": "14%",
+    "currency": "KES"
+    },
+    {
+    "fund": "Gulfcap Money Market Fund",
+    "rate": "12%",
+    "currency": "KES"
+    },
+    {
+    "fund": "Orient Kasha Money Market Fund",
+    "rate": "12%",
+    "currency": "KES"
+    },
+    {
+    "fund": "SC Shilingi Funds",
+    "rate": "12%",
+    "currency": "KES"
+    },
+    {
+    "fund": "Nabo Africa Money Market Fund",
+    "rate": "11%",
+    "currency": "KES"
+    },
+    {
+    "fund": "CIC Money Market Fund",
+    "rate": "11%",
+    "currency": "KES"
+    },
+    {
+    "fund": "Etica Money Market Fund",
+    "rate": "10%",
+    "currency": "KES"
+    },
+    {
+    "fund": "Kuza Money Market Fund",
+    "rate": "10%",
+    "currency": "KES"
+    },
+    {
+    "fund": "Lofty-Corban Money Market Fund",
+    "rate": "11%",
+    "currency": "KES"
+    },
+    {
+    "fund": "Sanlam Allianz Money Market Fund",
+    "rate": "9%",
+    "currency": "KES"
+    },
+    {
+    "fund": "Cytonn Money Market Fund (USD)",
+    "rate": "6%",
+    "currency": "USD"
+    },
+    {
+    "fund": "Etica Money Market Fund (USD)",
+    "rate": "6%",
+    "currency": "USD"
+    },
+    {
+    "fund": "Nabo Africa Money Market Fund (USD)",
+    "rate": "5%",
+    "currency": "USD"
+    },
+    {
+    "fund": "Kuza Money Market Fund (USD)",
+    "rate": "6%",
+    "currency": "USD"
+    },
+    {
+    "fund": "Lofty-Corban Money Market Fund (USD)",
+    "rate": "5%",
+    "currency": "USD"
+    },
+    {
+    "fund": "Sanlam Allianz USD Fixed Income Fund",
+    "rate": "5%",
+    "currency": "USD"
+    }
+    ],
+    "Egypt": [
+    {
+    "fund": "Bank NXT Money Market Fund",
+    "rate": "23%",
+    "currency": "EGP"
+    },
+    {
+    "fund": "Bank of Alexandria Mutual Fund No. 2",
+    "rate": "22%",
+    "currency": "EGP"
+    },
+    {
+    "fund": "Emirates NBD Money Market Fund (Mazid)",
+    "rate": "22%",
+    "currency": "EGP"
+    },
+    {
+    "fund": "HSBC Egypt Money Market Fund (Kol Yom)",
+    "rate": "17%",
+    "currency": "EGP"
+    },
+    {
+    "fund": "Modkharaty Money Market Fund",
+    "rate": "17%",
+    "currency": "EGP"
+    },
+    {
+    "fund": "Azimut Money Market Fund",
+    "rate": "16%",
+    "currency": "EGP"
+    },
+    {
+    "fund": "QNB Themar Money Market Fund",
+    "rate": "16%",
+    "currency": "EGP"
+    },
+    {
+    "fund": "Al Baraka Money Market Fund",
+    "rate": "15%",
+    "currency": "EGP"
+    },
+    {
+    "fund": "Banque Misr Money Market Fund",
+    "rate": "15%",
+    "currency": "EGP"
+    },
+    {
+    "fund": "Arab Bank Yomaty Money Market Fund",
+    "rate": "15%",
+    "currency": "EGP"
+    },
+    {
+    "fund": "Zeed Platform (Aggregates Funds like Themar)",
+    "rate": "17%",
+    "currency": "EGP"
+    },
+    {
+    "fund": "EGP T-Bills (Secondary Market, 1 Month)",
+    "rate": "25%",
+    "currency": "EGP"
+    }
+    ],
+    "South Africa": [
+    {
+    "fund": "African Bank Fixed Deposit",
+    "rate": "13%",
+    "currency": "ZAR"
+    },
+    {
+    "fund": "Top5 Optimiser (Linked to Top Money Market Funds)",
+    "rate": "9%",
+    "currency": "ZAR"
+    },
+    {
+    "fund": "Old Mutual Money Market Fund",
+    "rate": "9%",
+    "currency": "ZAR"
+    },
+    {
+    "fund": "Coronation Money Market Fund",
+    "rate": "8%",
+    "currency": "ZAR"
+    },
+    {
+    "fund": "Allan Gray Money Market Fund",
+    "rate": "8%",
+    "currency": "ZAR"
+    },
+    {
+    "fund": "Nedbank Fixed Deposit",
+    "rate": "8%",
+    "currency": "ZAR"
+    },
+    {
+    "fund": "Ninety One Money Market Fund",
+    "rate": "8%",
+    "currency": "ZAR"
+    },
+    {
+    "fund": "STANLIB Money Market Fund",
+    "rate": "8%",
+    "currency": "ZAR"
+    },
+    {
+    "fund": "2-Year Fixed Rate Bond",
+    "rate": "8%",
+    "currency": "ZAR"
+    },
+    {
+    "fund": "Franc Money Market Options",
+    "rate": "8%",
+    "currency": "ZAR"
+    },
+    {
+    "fund": "EasyEquities Money Market Exposure",
+    "rate": "7%",
+    "currency": "ZAR"
+    },
+    {
+    "fund": "SBI Fixed Deposits",
+    "rate": "8%",
+    "currency": "ZAR"
+    },
+    {
+    "fund": "Standard Bank Fixed Deposit",
+    "rate": "8%",
+    "currency": "ZAR"
+    },
+    {
+    "fund": "Ninety One US Dollar Money Fund",
+    "rate": "4%",
+    "currency": "USD"
+    },
+    {
+    "fund": "SBI USD Fixed Deposits",
+    "rate": "3%",
+    "currency": "USD"
+    }
+    ],
+    "Ghana": [
+    {
+    "fund": "Republic Future Plan Trust (Balanced)",
+    "rate": "39%",
+    "currency": "GHS"
+    },
+    {
+    "fund": "Tesah Future Fund",
+    "rate": "28%",
+    "currency": "GHS"
+    },
+    {
+    "fund": "Databank Money Market Fund",
+    "rate": "23%",
+    "currency": "GHS"
+    },
+    {
+    "fund": "EDC Ghana Money Market Unit Trust",
+    "rate": "32%",
+    "currency": "GHS"
+    },
+    {
+    "fund": "Ecobank Money Market Fund",
+    "rate": "20%",
+    "currency": "GHS"
+    },
+    {
+    "fund": "BOA Investment Funds",
+    "rate": "23%",
+    "currency": "GHS"
+    },
+    {
+    "fund": "Fidelity Money Market Trust",
+    "rate": "20%",
+    "currency": "GHS"
+    },
+    {
+    "fund": "Stanbic Cash Trust (Money Market)",
+    "rate": "19%",
+    "currency": "GHS"
+    },
+    {
+    "fund": "Various Money Market Funds (e.g., via app)",
+    "rate": "20%",
+    "currency": "GHS"
+    },
+    {
+    "fund": "SEM Income Fund",
+    "rate": "23%",
+    "currency": "GHS"
+    }
+    ]
+    }

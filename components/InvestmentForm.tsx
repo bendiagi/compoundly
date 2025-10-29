@@ -11,20 +11,17 @@ import { Card, CardContent } from '@/components/ui/card';
 import CurrencyToggle from '@/components/CurrencyToggle';
 import CountrySelect from '@/components/CountrySelect';
 import RateSelector from '@/components/RateSelector';
+import { getInvestmentOptions } from '@/lib/investments';
+import { useEffectiveCountryCode } from '@/lib/store/location';
 import { calculateCompoundReturns, ProjectionPoint } from '@/lib/calculateCompoundReturns';
 import { useEffect, useCallback, useRef, useState } from 'react';
 import { Toggle } from '@/components/ui/toggle';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
-// Import rates data
-const rates = [
-  { name: 'S&P 500', rate: 10 },
-  { name: 'Crypto Index', rate: 20 },
-  { name: 'Fixed Deposit', rate: 8 },
-];
+// Dynamic rates will be derived from data/investments.json
 
 const formSchema = z.object({
-  currency: z.enum(['NGN', 'USD']),
+  currency: z.enum(['USD', 'NGN', 'KES', 'ZAR', 'GHS', 'EGP']),
   initial: z.coerce.number().min(0, 'Initial amount must be positive'),
   recurring: z.coerce.number().min(0, 'Recurring amount must be positive'),
   recurringFrequency: z.enum(['weekly', 'monthly']),
@@ -135,6 +132,30 @@ const InvestmentForm: React.FC<Props> = ({ onCalculate }) => {
   }, [watchedValues, calculateResults]);
 
   const currency = watch('currency');
+  const countryCode = useEffectiveCountryCode();
+  const rateOptions = getInvestmentOptions({ countryCode, currencyCode: currency });
+  if (process.env.NODE_ENV !== 'production') {
+    console.log('[form] country/currency/options', { countryCode, currency, options: rateOptions.length });
+  }
+
+  // Determine currency options for selected country: USD + local
+  const localCurrencyMap: Record<string, 'NGN' | 'KES' | 'ZAR' | 'GHS' | 'EGP' | undefined> = {
+    NG: 'NGN',
+    KE: 'KES',
+    ZA: 'ZAR',
+    GH: 'GHS',
+    EG: 'EGP',
+  };
+  const localCurrency = countryCode ? localCurrencyMap[countryCode] : undefined;
+  const currencyOptions = localCurrency ? (['USD', localCurrency] as const) : (['USD', 'NGN'] as const);
+
+  // Ensure selected currency is valid for the country; if not, fallback to USD
+  useEffect(() => {
+    if (!currencyOptions.includes(currency as any)) {
+      setValue('currency', 'USD');
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [countryCode]);
 
   // Handle mobile calculate button click
   const handleMobileCalculate = () => {
@@ -172,7 +193,7 @@ const InvestmentForm: React.FC<Props> = ({ onCalculate }) => {
                 name="currency"
                 control={control}
                 render={({ field }) => (
-                  <CurrencyToggle value={field.value} onChange={field.onChange} />
+                  <CurrencyToggle value={field.value as any} options={currencyOptions as any} onChange={field.onChange as any} />
                 )}
               />
             </div>
@@ -281,7 +302,7 @@ const InvestmentForm: React.FC<Props> = ({ onCalculate }) => {
                 <RateSelector
                   value={field.value}
                   onChange={field.onChange}
-                  options={rates}
+                  options={rateOptions}
                 />
               )}
             />

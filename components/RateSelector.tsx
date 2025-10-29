@@ -9,6 +9,7 @@ import { Label } from '@/components/ui/label';
 interface Option {
   name: string;
   rate: number;
+  flag?: string;
 }
 
 interface Props {
@@ -39,16 +40,18 @@ const RateSelector: React.FC<Props> = ({ value, onChange, options }) => {
 
   return (
     <div className="flex flex-row gap-4 items-end">
-      <div className="flex-1">
+      <div>
         <Popover open={open} onOpenChange={setOpen}>
           <PopoverTrigger asChild>
             <Button
               variant="outline"
               role="combobox"
               aria-expanded={open}
-              className="w-full justify-between bg-[#222821] border-[#33532A] text-white hover:bg-[#222821]/90"
+              className="w-64 lg:w-72 justify-between bg-[#222821] border-[#33532A] text-white hover:bg-[#222821]/90 overflow-hidden"
             >
-              {selectedOption ? `${selectedOption.name} (${selectedOption.rate}%)` : 'Select rate...'}
+              <span className="truncate">
+                {selectedOption ? `${selectedOption.name} (${selectedOption.rate}%)` : 'Select rate...'}
+              </span>
               <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
             </Button>
           </PopoverTrigger>
@@ -70,6 +73,7 @@ const RateSelector: React.FC<Props> = ({ value, onChange, options }) => {
                           value === option.rate ? 'opacity-100' : 'opacity-0'
                         }`}
                       />
+                      <span className="mr-2">{option.flag ?? ''}</span>
                       {option.name} ({option.rate}%)
                     </CommandItem>
                   ))}

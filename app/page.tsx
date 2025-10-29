@@ -11,7 +11,7 @@ import { calculateCompoundReturns } from '@/lib/calculateCompoundReturns';
 
 // Define the form values type to match InvestmentForm
 type FormValues = {
-  currency: 'USD' | 'NGN';
+  currency: 'USD' | 'NGN' | 'KES' | 'ZAR' | 'GHS' | 'EGP';
   initial: number;
   recurring: number;
   recurringFrequency: 'weekly' | 'monthly';
