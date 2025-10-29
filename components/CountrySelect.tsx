@@ -35,9 +35,13 @@ const CountrySelect: React.FC<Props> = ({ className }) => {
           {current ? `${current.flag} ${current.name}` : 'Select country'}
         </SelectValue>
       </SelectTrigger>
-      <SelectContent>
+      <SelectContent className="bg-[#2A3326] border-[#33532A] text-white">
         {countries.map((c) => (
-          <SelectItem key={c.code} value={c.code}>
+          <SelectItem
+            key={c.code}
+            value={c.code}
+            className="text-white hover:!bg-[#3A4C37] data-[selected=true]:!bg-[#3A4C37] focus:!bg-[#3A4C37]"
+          >
             {c.flag} {c.name}
           </SelectItem>
         ))}

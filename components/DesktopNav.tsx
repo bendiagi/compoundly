@@ -46,7 +46,7 @@ const CalcCounter: React.FC = () => {
   return (
     <div className="flex items-center">
       <div className="px-3 py-1 rounded-full border border-[#33532A] text-[#DAE5D0] bg-[#222821] font-geist-mono text-sm">
-        {(count ?? '…')} investment journeys visualized.
+        <span className="font-bold">{count ?? '…'}</span> investment journeys visualized
       </div>
     </div>
   );
