@@ -37,7 +37,7 @@
     },
     {
     "fund": "Stanbic IBTC Money Market Fund",
-    "rate": "20%",
+    "rate": "18%",
     "currency": "NGN"
     },
     {
@@ -79,6 +79,26 @@
     "fund": "Risevest Fixed Income",
     "rate": "10%",
     "currency": "USD"
+    },
+    {
+    "fund": "Stanbic IBTC Dollar Fund",
+    "rate": "7%",
+    "currency": "USD"
+    },
+    {
+    "fund": "Zedcrest Dollar Fund",
+    "rate": "8%",
+    "currency": "USD"
+    },
+    {
+    "fund": "Zedcrest Money Market Fund",
+    "rate": "21%",
+    "currency": "NGN"
+    },
+    {
+    "fund": "Stanbic IBTC Nigerian Equity Fund",
+    "rate": "73%",
+    "currency": "NGN"
     }
     ],
     "Kenya": [
