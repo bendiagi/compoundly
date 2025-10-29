@@ -45,15 +45,15 @@ const RateSelector: React.FC<Props> = ({ value, onChange, options }) => {
     : options.find((opt) => opt.rate === value);
 
   return (
-    <div className="flex flex-row gap-4 items-end">
-      <div>
+    <div className="flex flex-row gap-2 items-end w-full">
+      <div className="w-1/2">
         <Popover open={open} onOpenChange={setOpen}>
           <PopoverTrigger asChild>
             <Button
               variant="outline"
               role="combobox"
               aria-expanded={open}
-              className="w-64 lg:w-72 justify-between bg-[#222821] border-[#33532A] text-white hover:bg-[#222821]/90 overflow-hidden"
+              className="w-full lg:w-72 justify-between bg-[#222821] border-[#33532A] text-white hover:bg-[#222821]/90 overflow-hidden"
             >
               <span className="truncate">
                 {selectedOption ? `${selectedOption.name} (${selectedOption.rate}%)` : 'Select rate...'}
@@ -61,7 +61,7 @@ const RateSelector: React.FC<Props> = ({ value, onChange, options }) => {
               <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
             </Button>
           </PopoverTrigger>
-          <PopoverContent align="start" className="w-64 lg:w-72 p-0 bg-[#2A3326] border-[#33532A]">
+          <PopoverContent align="start" className="w-full lg:w-72 p-0 bg-[#2A3326] border-[#33532A]">
             <Command className="text-left bg-[#2A3326] text-white">
               <CommandInput placeholder="Search rates..." className="text-white placeholder:text-gray-400 bg-[#2A3326]" />
               <CommandList className="bg-[#2A3326]">
@@ -86,13 +86,13 @@ const RateSelector: React.FC<Props> = ({ value, onChange, options }) => {
           </PopoverContent>
         </Popover>
       </div>
-      
-      <div className="flex gap-2 items-center flex-1">
+
+      <div className="flex gap-2 items-center w-1/2 min-w-0">
         <Label className="text-sm text-gray-300 whitespace-nowrap">Custom:</Label>
         <Input
           type="number"
           step="0.01"
-          className="w-24 bg-[#222821] border-[#33532A] text-white placeholder:text-gray-400 focus:border-[#BDE681] focus:ring-1 focus:ring-[#BDE681]"
+          className="w-full bg-[#222821] border-[#33532A] text-white placeholder:text-gray-400 focus:border-[#BDE681] focus:ring-1 focus:ring-[#BDE681]"
           value={customRate}
           onChange={(e) => handleCustomRateChange(e.target.value)}
           placeholder="Custom"
