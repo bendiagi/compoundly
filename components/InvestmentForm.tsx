@@ -9,6 +9,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent } from '@/components/ui/card';
 import CurrencyToggle from '@/components/CurrencyToggle';
+import CurrencySelect from '@/components/CurrencySelect';
 import CountrySelect from '@/components/CountrySelect';
 import RateSelector from '@/components/RateSelector';
 import { getInvestmentOptions } from '@/lib/investments';
@@ -146,13 +147,24 @@ const InvestmentForm: React.FC<Props> = ({ onCalculate }) => {
     GH: 'GHS',
     EG: 'EGP',
   };
-  const localCurrency = countryCode ? localCurrencyMap[countryCode] : undefined;
+  const localCurrency = countryCode && countryCode !== 'ALL' ? localCurrencyMap[countryCode] : undefined;
   const currencyOptions = localCurrency ? (['USD', localCurrency] as const) : (['USD', 'NGN'] as const);
+
+  // All available currencies for "All" country selection
+  const allCurrencies: ('USD' | 'NGN' | 'KES' | 'ZAR' | 'GHS' | 'EGP')[] = ['USD', 'NGN', 'KES', 'ZAR', 'GHS', 'EGP'];
 
   // Ensure selected currency is valid for the country; if not, fallback to USD
   useEffect(() => {
-    if (!currencyOptions.includes(currency as any)) {
-      setValue('currency', 'USD');
+    if (countryCode === 'ALL') {
+      // When "All" is selected, ensure currency is in the full list
+      if (!allCurrencies.includes(currency as any)) {
+        setValue('currency', 'USD');
+      }
+    } else {
+      // When specific country is selected, ensure currency is in the country's options
+      if (!currencyOptions.includes(currency as any)) {
+        setValue('currency', 'USD');
+      }
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [countryCode]);
@@ -180,20 +192,24 @@ const InvestmentForm: React.FC<Props> = ({ onCalculate }) => {
       <div className="flex flex-col gap-4">
         {/* Header row: Country then Currency inline on the left */}
         <div className="flex items-end gap-3">
-          <div className="w-full lg:w-1/2">
+          <div className="flex-1">
             <Label className="text-sm font-medium text-gray-300">Country</Label>
             <div className="mt-1">
               <CountrySelect className="w-full" />
             </div>
           </div>
-          <div>
+          <div className="flex-1">
             <Label className="text-sm font-medium text-gray-300">Choose currency</Label>
             <div className="mt-1">
               <Controller
                 name="currency"
                 control={control}
                 render={({ field }) => (
-                  <CurrencyToggle value={field.value as any} options={currencyOptions as any} onChange={field.onChange as any} />
+                  countryCode === 'ALL' ? (
+                    <CurrencySelect value={field.value as any} onChange={field.onChange as any} className="w-full" />
+                  ) : (
+                    <CurrencyToggle value={field.value as any} options={currencyOptions as any} onChange={field.onChange as any} />
+                  )
                 )}
               />
             </div>
