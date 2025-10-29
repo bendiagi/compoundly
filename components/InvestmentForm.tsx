@@ -138,7 +138,7 @@ const InvestmentForm: React.FC<Props> = ({ onCalculate }) => {
     EG: 'EGP',
   };
   const localCurrency = countryCode && countryCode !== 'ALL' ? localCurrencyMap[countryCode] : undefined;
-  const currencyOptions = localCurrency ? (['USD', localCurrency] as const) : (['USD', 'NGN'] as const);
+  const currencyOptions = localCurrency ? ([localCurrency, 'USD'] as const) : (['NGN', 'USD'] as const);
 
   // All available currencies for "All" country selection
   const allCurrencies: ('USD' | 'NGN' | 'KES' | 'ZAR' | 'GHS' | 'EGP')[] = ['USD', 'NGN', 'KES', 'ZAR', 'GHS', 'EGP'];
@@ -151,9 +151,14 @@ const InvestmentForm: React.FC<Props> = ({ onCalculate }) => {
         setValue('currency', 'USD');
       }
     } else {
-      // When specific country is selected, ensure currency is in the country's options
-      if (!currencyOptions.includes(currency as any)) {
-        setValue('currency', 'USD');
+      // When a specific country is selected, default to local currency
+      if (localCurrency) {
+        setValue('currency', localCurrency);
+      } else {
+        // Fallback: ensure selected currency is valid for country; otherwise choose USD
+        if (!currencyOptions.includes(currency as any)) {
+          setValue('currency', 'USD');
+        }
       }
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps

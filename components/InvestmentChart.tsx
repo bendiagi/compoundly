@@ -25,12 +25,20 @@ const getCurrencySymbol = (currency: string) => {
   switch (currency) {
     case 'USD':
       return '$';
+    case 'NGN':
+      return '₦';
+    case 'KES':
+      return 'KSh';
+    case 'ZAR':
+      return 'R';
+    case 'GHS':
+      return '₵';
+    case 'EGP':
+      return 'E£';
     case 'EUR':
       return '€';
     case 'GBP':
       return '£';
-    case 'NGN':
-      return '₦';
     default:
       return '$';
   }
