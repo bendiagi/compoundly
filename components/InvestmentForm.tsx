@@ -9,6 +9,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent } from '@/components/ui/card';
 import CurrencyToggle from '@/components/CurrencyToggle';
+import CountrySelect from '@/components/CountrySelect';
 import RateSelector from '@/components/RateSelector';
 import { calculateCompoundReturns, ProjectionPoint } from '@/lib/calculateCompoundReturns';
 import { useEffect, useCallback, useRef, useState } from 'react';
@@ -23,7 +24,7 @@ const rates = [
 ];
 
 const formSchema = z.object({
-  currency: z.enum(['NGN', 'USD', 'EUR', 'GBP']),
+  currency: z.enum(['NGN', 'USD']),
   initial: z.coerce.number().min(0, 'Initial amount must be positive'),
   recurring: z.coerce.number().min(0, 'Recurring amount must be positive'),
   recurringFrequency: z.enum(['weekly', 'monthly']),
@@ -156,23 +157,25 @@ const InvestmentForm: React.FC<Props> = ({ onCalculate }) => {
   return (
     <TooltipProvider>
       <div className="flex flex-col gap-4">
-        <div>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Label className="text-sm font-medium text-gray-300">Choose currency</Label>
-            </TooltipTrigger>
-            <TooltipContent className="bg-[#ECF3E3] border-[#33532A] text-[#222821]">
-              <p>Choose your preferred currency for calculations</p>
-            </TooltipContent>
-          </Tooltip>
-          <div className="mt-1">
-            <Controller
-              name="currency"
-              control={control}
-              render={({ field }) => (
-                <CurrencyToggle value={field.value} onChange={field.onChange} />
-              )}
-            />
+        {/* Header row: Country then Currency inline on the left */}
+        <div className="flex items-end gap-3">
+          <div className="w-full lg:w-1/2">
+            <Label className="text-sm font-medium text-gray-300">Country</Label>
+            <div className="mt-1">
+              <CountrySelect className="w-full" />
+            </div>
+          </div>
+          <div>
+            <Label className="text-sm font-medium text-gray-300">Choose currency</Label>
+            <div className="mt-1">
+              <Controller
+                name="currency"
+                control={control}
+                render={({ field }) => (
+                  <CurrencyToggle value={field.value} onChange={field.onChange} />
+                )}
+              />
+            </div>
           </div>
         </div>
         <div className="flex gap-2 mb-2">
