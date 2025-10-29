@@ -147,7 +147,7 @@ const InvestmentChart: React.FC<Props> = ({ data, form }) => {
                   const totalBalance = principal + interest;
                   
                   return (
-                    <div className="border-[#33532A] bg-[#ECF3E3] text-[#222821] shadow-lg rounded-lg p-3 min-w-[200px]">
+                    <div className="border-[#33532A] bg-[#ECF3E3] text-[#222821] shadow-lg rounded-lg p-3 min-w-[260px]">
                       <div className="font-semibold text-sm mb-2">Year {year}</div>
                       <div className="border-t border-[#33532A] mb-2"></div>
                       <div className="space-y-1 text-sm">

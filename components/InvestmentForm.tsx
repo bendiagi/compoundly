@@ -66,6 +66,19 @@ const InvestmentForm: React.FC<Props> = ({ onCalculate }) => {
   // Watch individual form fields for automatic calculation
   const watchedValues = watch();
 
+  // Helpers for formatting and parsing numeric inputs with grouping separators
+  const formatNumberWithGrouping = (value: number | undefined | null) => {
+    if (value === undefined || value === null || !isFinite(Number(value))) return '';
+    return new Intl.NumberFormat(undefined, { maximumFractionDigits: 2 }).format(Number(value));
+  };
+
+  const parseFormattedNumber = (raw: string) => {
+    const sanitized = raw.replace(/[,\s]/g, '');
+    if (sanitized === '' || sanitized === '.') return NaN;
+    const parsed = Number(sanitized);
+    return isFinite(parsed) ? parsed : NaN;
+  };
+
   // Memoize the calculation function to prevent unnecessary re-renders
   const calculateResults = useCallback(() => {
     // Get current form values
@@ -211,33 +224,41 @@ const InvestmentForm: React.FC<Props> = ({ onCalculate }) => {
           </div>
         </div>
         <div className="flex gap-2 mb-2">
-          <div className="flex-1">
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Label className="text-sm font-medium text-gray-300">Starting amount</Label>
-              </TooltipTrigger>
-              <TooltipContent className="bg-[#ECF3E3] border-[#33532A] text-[#222821]">
-                <p>How much are you starting with?</p>
-              </TooltipContent>
-            </Tooltip>
-            <div className="mt-2">
-              <Input
-                type="number"
-                step="any"
-                {...register('initial', { 
-                  valueAsNumber: true,
-                  onChange: (e) => {
-                    const value = parseFloat(e.target.value);
-                    if (!isNaN(value) && value > 0) {
-                      setValue('initial', value);
+        <div className="flex-1">
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Label className="text-sm font-medium text-gray-300">Starting amount</Label>
+            </TooltipTrigger>
+            <TooltipContent className="bg-[#ECF3E3] border-[#33532A] text-[#222821]">
+              <p>How much are you starting with?</p>
+            </TooltipContent>
+          </Tooltip>
+          <div className="mt-2">
+            <Controller
+              name="initial"
+              control={control}
+              render={({ field }) => (
+                <Input
+                  type="text"
+                  inputMode="decimal"
+                  pattern="[0-9.,]*"
+                  value={formatNumberWithGrouping(field.value as any)}
+                  onChange={(e) => {
+                    const raw = e.target.value;
+                    const parsed = parseFormattedNumber(raw);
+                    if (isNaN(parsed)) {
+                      field.onChange(undefined);
+                    } else {
+                      field.onChange(parsed);
                     }
-                  }
-                })}
-                className="w-full rounded-lg px-3 py-2 bg-[#222821] border border-[#33532A] text-white placeholder:text-gray-400 focus:border-[#BDE681] focus:ring-1 focus:ring-[#BDE681] transition-colors duration-200"
-              />
-            </div>
-            {errors.initial && <span className="text-red-500 text-xs mt-1">{errors.initial.message}</span>}
+                  }}
+                  className="w-full rounded-lg px-3 py-2 bg-[#222821] border border-[#33532A] text-white placeholder:text-gray-400 focus:border-[#BDE681] focus:ring-1 focus:ring-[#BDE681] transition-colors duration-200"
+                />
+              )}
+            />
           </div>
+          {errors.initial && <span className="text-red-500 text-xs mt-1">{errors.initial.message}</span>}
+        </div>
           <div className="flex-1">
             <Tooltip>
               <TooltipTrigger asChild>
@@ -247,22 +268,30 @@ const InvestmentForm: React.FC<Props> = ({ onCalculate }) => {
                 <p>How much will you add regularly?</p>
               </TooltipContent>
             </Tooltip>
-            <div className="mt-2">
-              <Input
-                type="number"
-                step="any"
-                {...register('recurring', { 
-                  valueAsNumber: true,
-                  onChange: (e) => {
-                    const value = parseFloat(e.target.value);
-                    if (!isNaN(value) && value >= 0) {
-                      setValue('recurring', value);
+          <div className="mt-2">
+            <Controller
+              name="recurring"
+              control={control}
+              render={({ field }) => (
+                <Input
+                  type="text"
+                  inputMode="decimal"
+                  pattern="[0-9.,]*"
+                  value={formatNumberWithGrouping(field.value as any)}
+                  onChange={(e) => {
+                    const raw = e.target.value;
+                    const parsed = parseFormattedNumber(raw);
+                    if (isNaN(parsed)) {
+                      field.onChange(undefined);
+                    } else {
+                      field.onChange(parsed);
                     }
-                  }
-                })}
-                className="w-full rounded-lg px-3 py-2 bg-[#222821] border border-[#33532A] text-white placeholder:text-gray-400 focus:border-[#BDE681] focus:ring-1 focus:ring-[#BDE681] transition-colors duration-200"
-              />
-            </div>
+                  }}
+                  className="w-full rounded-lg px-3 py-2 bg-[#222821] border border-[#33532A] text-white placeholder:text-gray-400 focus:border-[#BDE681] focus:ring-1 focus:ring-[#BDE681] transition-colors duration-200"
+                />
+              )}
+            />
+          </div>
             {errors.recurring && <span className="text-red-500 text-xs mt-1">{errors.recurring.message}</span>}
           </div>
         </div>
