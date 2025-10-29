@@ -65,6 +65,8 @@ const InvestmentForm: React.FC<Props> = ({ onCalculate }) => {
   const [isCalculating, setIsCalculating] = useState(false);
   // Watch individual form fields for automatic calculation
   const watchedValues = watch();
+  const lastCountedHashRef = useRef<string | null>(null);
+  const desktopDebounceIdRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Helpers for formatting and parsing numeric inputs with grouping separators
   const formatNumberWithGrouping = (value: number | undefined | null) => {
@@ -122,6 +124,27 @@ const InvestmentForm: React.FC<Props> = ({ onCalculate }) => {
     }
   }, [getValues, onCalculate]);
 
+  const hashInputs = (v: FormValues) => {
+    return [
+      v.currency,
+      v.initial,
+      v.recurring,
+      v.recurringFrequency,
+      v.interestRate,
+      v.compoundingFrequency,
+      v.age,
+    ].join('|');
+  };
+
+  const postMetricsIncrement = async () => {
+    if (process.env.NEXT_PUBLIC_METRICS_ENABLED !== 'true') return;
+    try {
+      await fetch('/api/metrics/calc', { method: 'POST' });
+    } catch {
+      // ignore
+    }
+  };
+
   // Automatically calculate whenever any field changes
   useEffect(() => {
     // Skip the first render to prevent infinite loops
@@ -137,6 +160,26 @@ const InvestmentForm: React.FC<Props> = ({ onCalculate }) => {
     
     return () => clearTimeout(timeoutId);
   }, [watchedValues, calculateResults, getValues]);
+
+  // Desktop auto-calc: debounce + dedupe metric increments
+  useEffect(() => {
+    // mobile uses explicit button; this handles desktop where auto calc happens
+    if (typeof window !== 'undefined' && window.innerWidth <= 768) return;
+    const v = getValues();
+    const valid = v.initial > 0 && v.interestRate > 0 && v.age > 0;
+    if (!valid) return;
+    const h = hashInputs(v);
+    if (desktopDebounceIdRef.current) clearTimeout(desktopDebounceIdRef.current);
+    desktopDebounceIdRef.current = setTimeout(() => {
+      if (lastCountedHashRef.current !== h) {
+        lastCountedHashRef.current = h;
+        postMetricsIncrement();
+      }
+    }, 1200);
+    return () => {
+      if (desktopDebounceIdRef.current) clearTimeout(desktopDebounceIdRef.current);
+    };
+  }, [watchedValues, getValues]);
 
   const currency = watch('currency');
   const countryCode = useEffectiveCountryCode();
@@ -190,6 +233,12 @@ const InvestmentForm: React.FC<Props> = ({ onCalculate }) => {
             behavior: 'smooth',
             block: 'start'
           });
+        }
+        // Increment metrics after a successful calculate on mobile
+        const v = getValues();
+        const valid = v.initial > 0 && v.interestRate > 0 && v.age > 0;
+        if (valid) {
+          postMetricsIncrement();
         }
       }, 100); // Small delay to ensure calculation completes
     }
