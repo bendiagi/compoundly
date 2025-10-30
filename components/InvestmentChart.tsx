@@ -12,6 +12,8 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from '@/components/ui/chart';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { formatAbbrevNumberMobile, formatFullNumber } from '@/lib/utils';
 
 interface Props {
   data: ProjectionPoint[] | null;
@@ -73,10 +75,11 @@ const InvestmentChart: React.FC<Props> = ({ data, form }) => {
     return <div className="text-gray-400">Invalid calculation data. Please check your inputs.</div>;
   }
   
+  const isMobile = useIsMobile();
   // Format currency values safely
   const formatCurrency = (value: number) => {
-    if (!isFinite(value) || value < 0) return '0';
-    return value.toLocaleString();
+    if (!isFinite(value)) return '0';
+    return formatFullNumber(Math.max(0, value));
   };
   
   const totalBalance = lastDataPoint.total;
@@ -91,8 +94,8 @@ const InvestmentChart: React.FC<Props> = ({ data, form }) => {
         {/* Total Balance - Mobile: full width first line, Desktop: normal */}
         <div className="lg:w-auto w-full">
           <div className="text-sm font-medium text-[#33532A] mb-1 font-geist-mono">Total Balance</div>
-          <div className="text-3xl font-light text-[#222821]">
-            {currencySymbol}{formatCurrency(totalBalance)}
+          <div className="text-3xl font-light text-[#222821] min-w-0 truncate" title={`${currencySymbol}${formatFullNumber(totalBalance)}`}>
+            {currencySymbol}{formatAbbrevNumberMobile(totalBalance, isMobile)}
           </div>
         </div>
         
@@ -100,14 +103,14 @@ const InvestmentChart: React.FC<Props> = ({ data, form }) => {
         <div className="lg:w-auto w-full flex gap-8">
           <div>
             <div className="text-sm font-medium text-[#33532A] mb-1 font-geist-mono">Interest Earned</div>
-            <div className="text-3xl font-light text-[#222821]">
-              {currencySymbol}{formatCurrency(interestEarned)}
+            <div className="text-3xl font-light text-[#222821] min-w-0 truncate" title={`${currencySymbol}${formatFullNumber(interestEarned)}`}>
+              {currencySymbol}{formatAbbrevNumberMobile(interestEarned, isMobile)}
             </div>
           </div>
           <div>
             <div className="text-sm font-medium text-[#33532A] mb-1 font-geist-mono">Total Invested</div>
-            <div className="text-3xl font-light text-[#222821]">
-              {currencySymbol}{formatCurrency(totalInvested)}
+            <div className="text-3xl font-light text-[#222821] min-w-0 truncate" title={`${currencySymbol}${formatFullNumber(totalInvested)}`}>
+              {currencySymbol}{formatAbbrevNumberMobile(totalInvested, isMobile)}
             </div>
           </div>
         </div>

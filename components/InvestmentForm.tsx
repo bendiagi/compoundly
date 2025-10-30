@@ -176,6 +176,29 @@ const InvestmentForm: React.FC<Props> = ({ onCalculate }) => {
   const countryCode = useEffectiveCountryCode();
   const rateOptions = getInvestmentOptions({ countryCode, currencyCode: currency });
 
+  // Local raw text state for editable currency fields to allow clearing
+  const [initialInput, setInitialInput] = useState<string>(() => formatNumberWithGrouping(defaultValues.initial));
+  const [recurringInput, setRecurringInput] = useState<string>(() => formatNumberWithGrouping(defaultValues.recurring));
+
+  // Keep local text in sync if form values change programmatically
+  const watchedInitial = watch('initial');
+  const watchedRecurring = watch('recurring');
+  useEffect(() => {
+    // Only sync when the formatted value differs from what's shown and the form has a concrete number
+    const formatted = formatNumberWithGrouping(watchedInitial as any);
+    if (formatted !== initialInput && formatted !== '' && document.activeElement !== null) {
+      setInitialInput(formatted);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [watchedInitial]);
+  useEffect(() => {
+    const formatted = formatNumberWithGrouping(watchedRecurring as any);
+    if (formatted !== recurringInput && formatted !== '' && document.activeElement !== null) {
+      setRecurringInput(formatted);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [watchedRecurring]);
+
   // Determine currency options for selected country: USD + local
   const localCurrencyMap: Record<string, 'NGN' | 'KES' | 'ZAR' | 'GHS' | 'EGP' | undefined> = {
     NG: 'NGN',
@@ -282,14 +305,25 @@ const InvestmentForm: React.FC<Props> = ({ onCalculate }) => {
                   type="text"
                   inputMode="decimal"
                   pattern="[0-9.,]*"
-                  value={formatNumberWithGrouping(field.value as any)}
+                  value={initialInput}
                   onChange={(e) => {
                     const raw = e.target.value;
+                    setInitialInput(raw);
                     const parsed = parseFormattedNumber(raw);
                     if (isNaN(parsed)) {
-                      field.onChange(undefined);
+                      // Allow clearing/invalid intermediate states without snapping back
+                      field.onChange(undefined as any);
                     } else {
-                      field.onChange(parsed);
+                      field.onChange(parsed as any);
+                      // Optionally reformat as they type only when adding valid numbers
+                      // But keep their raw input to avoid cursor jumps; formatting occurs on next programmatic sync
+                    }
+                  }}
+                  onBlur={() => {
+                    // On blur, normalize display formatting if a valid number exists; otherwise keep empty
+                    const parsed = parseFormattedNumber(initialInput);
+                    if (!isNaN(parsed)) {
+                      setInitialInput(formatNumberWithGrouping(parsed));
                     }
                   }}
                   className="w-full rounded-lg px-3 py-2 bg-[#222821] border border-[#33532A] text-white placeholder:text-gray-400 focus:border-[#BDE681] focus:ring-1 focus:ring-[#BDE681] transition-colors duration-200"
@@ -317,14 +351,21 @@ const InvestmentForm: React.FC<Props> = ({ onCalculate }) => {
                   type="text"
                   inputMode="decimal"
                   pattern="[0-9.,]*"
-                  value={formatNumberWithGrouping(field.value as any)}
+                  value={recurringInput}
                   onChange={(e) => {
                     const raw = e.target.value;
+                    setRecurringInput(raw);
                     const parsed = parseFormattedNumber(raw);
                     if (isNaN(parsed)) {
-                      field.onChange(undefined);
+                      field.onChange(undefined as any);
                     } else {
-                      field.onChange(parsed);
+                      field.onChange(parsed as any);
+                    }
+                  }}
+                  onBlur={() => {
+                    const parsed = parseFormattedNumber(recurringInput);
+                    if (!isNaN(parsed)) {
+                      setRecurringInput(formatNumberWithGrouping(parsed));
                     }
                   }}
                   className="w-full rounded-lg px-3 py-2 bg-[#222821] border border-[#33532A] text-white placeholder:text-gray-400 focus:border-[#BDE681] focus:ring-1 focus:ring-[#BDE681] transition-colors duration-200"

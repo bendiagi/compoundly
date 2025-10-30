@@ -2,6 +2,8 @@ import React from 'react';
 import { ProjectionPoint } from '@/lib/calculateCompoundReturns';
 import { Card, CardContent } from '@/components/ui/card';
 import { TrendingUp, Dot } from 'lucide-react';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { formatAbbrevNumberMobile, formatFullNumber } from '@/lib/utils';
 
 interface Props {
   data: ProjectionPoint[] | null;
@@ -43,11 +45,12 @@ const SummaryStats: React.FC<Props> = ({ data, form }) => {
   
   // Format currency values safely
   const formatCurrency = (value: number) => {
-    if (!isFinite(value) || value < 0) return '0';
-    return value.toLocaleString();
+    if (!isFinite(value)) return '0';
+    return formatFullNumber(Math.max(0, value));
   };
   
   const currencySymbol = getCurrencySymbol(form?.currency || 'USD');
+  const isMobile = useIsMobile();
   
   return (
     <Card className="bg-[#222821] border border-[#33532A] rounded-2xl shadow-lg p-6">
@@ -55,11 +58,11 @@ const SummaryStats: React.FC<Props> = ({ data, form }) => {
         <h3 className="text-lg font-semibold text-white mb-2">Portfolio Breakdown</h3>
         <div className="flex items-center gap-2 text-lg font-semibold text-[#BDE681]">
           <TrendingUp size={20} className="text-[#BDE681]" />
-          Interest Earned: <span>{currencySymbol}{formatCurrency(last.interest)}</span>
+          Interest Earned: <span className="min-w-0 truncate" title={`${currencySymbol}${formatFullNumber(last.interest)}`}>{currencySymbol}{formatAbbrevNumberMobile(last.interest, isMobile)}</span>
         </div>
         <div className="flex items-center gap-2 text-lg font-semibold text-[#BDE681]">
           <Dot size={20} className="text-[#BDE681]" />
-          Total Invested: <span>{currencySymbol}{formatCurrency(last.principal)}</span>
+          Total Invested: <span className="min-w-0 truncate" title={`${currencySymbol}${formatFullNumber(last.principal)}`}>{currencySymbol}{formatAbbrevNumberMobile(last.principal, isMobile)}</span>
         </div>
       </CardContent>
     </Card>
